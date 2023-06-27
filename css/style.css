@@ -1,0 +1,7 @@
+@import 'bulma.min.css';
+
+* {
+  font-family: 'Nunito', sans-serif;
+}
+
+.is-rounded-box { border-radius: 20px; }
