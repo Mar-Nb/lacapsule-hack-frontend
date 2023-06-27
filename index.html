@@ -13,6 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+  <link rel="shortcut icon" href="./images/favicon.svg" type="image/svg+xml">
 </head>
 
 <body>
@@ -20,7 +21,7 @@
     <nav class="navbar" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
         <a class="navbar-item" href="https://bulma.io">
-          <img src="https://placehold.co/112x45" width="112" height="28">
+          <img src="./images/Travelhack.svg">
         </a>
 
         <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
@@ -56,12 +57,12 @@
   </header>
 
   <main class="container">
-    <div class="has-text-centered block">
-      <h1 class="title">Title</h1>
-      <h2 class="subtitle">Subtitle</h2>
+    <div class="has-text-centered block mt-4">
+      <h1 class="title has-text-white">Hé ! Tu veux prendre le train ?</h1>
+      <h2 class="subtitle has-text-white">Comparez, réservez et profitez de tarifs pas chers pour vos billets de train : <span class="has-text-weight-bold">votre voyage commence sur Tickethack</span></h2>
     </div>
 
-    <div class="box is-rounded-box">
+    <div id="search-zone" class="box is-rounded-box">
       <div class="field is-horizontal">
         <div class="field-body">
           <div class="field">
@@ -111,51 +112,61 @@
       </div>
     </div>
     
-    <div class="box is-rounded-box">
+    <div id="result-zone" class="box is-rounded-box">
       <h2 class="subtitle">Résultat de la recherche</h2>
 
       <section id="liste-result">
-        <article class="level">
-          <div class="level-left">
-            <span class="icon">
-              <i class="fa-solid fa-train"></i>
-            </span>
-          </div>
-
-          <p class="level-item has-text-weight-bold">Test > Test</p>
-          <p class="level-item">00h00</p>
-          <p class="level-item">999€</p>
-
-          <div class="level-right">
-            <div class="field">
-              <div class="control">
-                <button class="button is-rounded">
-                  <span class="icon is-small"><i class="fa-solid fa-circle-plus"></i></span>
-                </button>
-              </div>
-            </div>  
+        <article>
+          <div class="columns">
+            <div class="column is-1"><span class="icon"><i class="fa-solid fa-train"></i></span></div>
+            <div class="column"><p class="level-item has-text-weight-bold">Test > Test</p></div>
+            <div class="column"><p class="level-item">00h00</p></div>
+            <div class="column"><p class="level-item">999€</p></div>
+            <div class="column is-1">
+              <div class="field">
+                <div class="control">
+                  <button class="button is-rounded is-small add-cart">
+                    <span class="icon is-small"><i class="fa-solid fa-circle-plus"></i></span>
+                  </button>
+                </div>
+              </div>    
+            </div>
           </div>
         </article>
 
-        <article class="level">
-          <div class="level-left">
-            <span class="icon">
-              <i class="fa-solid fa-train"></i>
-            </span>
+        <article>
+          <div class="columns">
+            <div class="column is-1"><span class="icon"><i class="fa-solid fa-train"></i></span></div>
+            <div class="column"><p class="level-item has-text-weight-bold">Test > Test</p></div>
+            <div class="column"><p class="level-item">00h00</p></div>
+            <div class="column"><p class="level-item">999€</p></div>
+            <div class="column is-1">
+              <div class="field">
+                <div class="control">
+                  <button class="button is-rounded is-small add-cart">
+                    <span class="icon is-small"><i class="fa-solid fa-circle-plus"></i></span>
+                  </button>
+                </div>
+              </div>    
+            </div>
           </div>
+        </article>
 
-          <p class="level-item has-text-weight-bold">Test > Test</p>
-          <p class="level-item">00h00</p>
-          <p class="level-item">999€</p>
-
-          <div class="level-right">
-            <div class="field">
-              <div class="control">
-                <button class="button is-rounded">
-                  <span class="icon is-small"><i class="fa-solid fa-circle-plus"></i></span>
-                </button>
-              </div>
-            </div>  
+        <article>
+          <div class="columns">
+            <div class="column is-1"><span class="icon"><i class="fa-solid fa-train"></i></span></div>
+            <div class="column"><p class="level-item has-text-weight-bold">Test > Test</p></div>
+            <div class="column"><p class="level-item">00h00</p></div>
+            <div class="column"><p class="level-item">999€</p></div>
+            <div class="column is-1">
+              <div class="field">
+                <div class="control">
+                  <button class="button is-rounded is-small add-cart">
+                    <span class="icon is-small"><i class="fa-solid fa-circle-plus"></i></span>
+                  </button>
+                </div>
+              </div>    
+            </div>
           </div>
         </article>
       </section>
