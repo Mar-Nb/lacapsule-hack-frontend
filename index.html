@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TicketHack</title>
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+  <link rel="shortcut icon" href="./images/favicon.svg" type="image/svg+xml">
+</head>
+
+<body>
+  <header>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="https://bulma.io">
+          <img src="./images/Tickethack.svg" alt="Logo de TicketHack représentant un train">
+        </a>
+
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+
+      <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start"></div>
+
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <div class="field is-grouped">
+              <p class="control">
+                <button id="panier-btn" class="button is-rounded" data-target="modal-panier">
+                  <span class="icon is-small"><i class="fa-solid fa-cart-shopping"></i></span>
+                  <span>Panier</span>
+                </button>
+              </p>
+              <p class="control">
+                <button id="commande-btn" class="button is-rounded" data-target="modal-commande">
+                  <span class="icon is-small"><i class="fa-solid fa-suitcase"></i></span>
+                  <span>Mes commandes</span>
+                </button>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container">
+    <div class="has-text-centered block mt-4">
+      <h1 class="title has-text-white">Hé ! Tu veux prendre le train ?</h1>
+      <h2 class="subtitle has-text-white">Comparez, réservez et profitez de tarifs pas chers pour vos billets de train : <span class="has-text-weight-bold">votre voyage commence sur Tickethack</span></h2>
+    </div>
+
+    <div id="search-zone" class="box is-rounded-box">
+      <div class="field is-horizontal">
+        <div class="field-body">
+          <div class="field">
+            <p class="control is-expanded has-icons-left">
+              <input id="field-depart" class="input is-rounded" type="text" placeholder="Lieu de départ">
+              <span class="icon is-small is-left">
+                <i class="fa-solid fa-train"></i>
+              </span>
+            </p>
+          </div>
+
+          <div class="field">
+            <p class="control is-expanded has-icons-left">
+              <input id="field-arrive" class="input is-rounded" type="text" placeholder="Lieu d'arrivée">
+              <span class="icon is-small is-left">
+                <i class="fa-solid fa-train"></i>
+              </span>
+            </p>
+          </div>
+
+          <div class="field">
+            <p class="control is-expanded has-icons-left">
+              <input id="field-date" class="input is-rounded" type="date" placeholder="Date du voyage">
+              <span class="icon is-small is-left">
+                <i class="fa-solid fa-calendar-days"></i>
+              </span>
+            </p>
+          </div>
+
+          <div class="field">
+            <div class="control">
+              <button id="search-btn" class="button is-rounded">
+                <span class="icon is-small"><i class="fa-solid fa-magnifying-glass"></i></span>
+                <span>Rechercher</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="field is-flex-grow-0">
+            <div class="control">
+              <button class="button is-rounded" disabled>
+                <span class="icon is-small"><i class="fa-solid fa-sliders"></i></span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div id="result-zone" class="box is-rounded-box">
+      <div id="img-holder">
+        <img src="./images/adventure_map.svg" alt="Une représentation d'une femme partant à l'aventure">
+        <p class="subtitle">Et si vous partiez à l'aventure ?</p>
+      </div>
+      
+      <section id="liste-result" class="is-hidden">
+        <h1 class="title">Résultat de la recherche</h2>
+      </section>
+    </div>
+
+    <!-- Modal pour l'affichage du panier -->
+    <div id="modal-panier" class="modal">
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">
+            <span class="icon-text">
+              <span class="icon">
+                <i class="fa-solid fa-cart-shopping"></i>
+              </span>
+              <span>Panier</span>
+            </span>
+          </p>
+          <p class="mr-4 has-text-weight-bold">Total : <span id="panier-total"></span>€</p>
+          <button class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+          <!-- Content ... -->
+          <p>PANIER</p>
+        </section>
+        <footer class="modal-card-foot">
+          <button class="button is-success">Commander</button>
+        </footer>
+      </div>
+    </div>
+
+    <!-- Modal pour l'affichage des commandes -->
+    <div id="modal-commande" class="modal">
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">
+            <span class="icon-text">
+              <span class="icon">
+                <i class="fa-solid fa-suitcase"></i>
+              </span>
+              <span>Commandes</span>
+            </span>
+          </p>
+          <button class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+          <!-- Content ... -->
+          <p>COMMANDE</p>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
