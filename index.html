@@ -21,7 +21,7 @@
     <nav class="navbar" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
         <a class="navbar-item" href="https://bulma.io">
-          <img src="./images/Travelhack.svg">
+          <img src="./images/Tickethack.svg" alt="Logo de TicketHack représentant un train">
         </a>
 
         <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
@@ -38,13 +38,13 @@
           <div class="navbar-item">
             <div class="field is-grouped">
               <p class="control">
-                <button class="button is-rounded">
+                <button id="panier-btn" class="button is-rounded" data-target="modal-panier">
                   <span class="icon is-small"><i class="fa-solid fa-cart-shopping"></i></span>
                   <span>Panier</span>
                 </button>
               </p>
               <p class="control">
-                <button class="button is-rounded">
+                <button id="commande-btn" class="button is-rounded" data-target="modal-commande">
                   <span class="icon is-small"><i class="fa-solid fa-suitcase"></i></span>
                   <span>Mes commandes</span>
                 </button>
@@ -113,65 +113,66 @@
     </div>
     
     <div id="result-zone" class="box is-rounded-box">
-      <h2 class="subtitle">Résultat de la recherche</h2>
-
-      <section id="liste-result">
-        <article>
-          <div class="columns">
-            <div class="column is-1"><span class="icon"><i class="fa-solid fa-train"></i></span></div>
-            <div class="column"><p class="level-item has-text-weight-bold">Test > Test</p></div>
-            <div class="column"><p class="level-item">00h00</p></div>
-            <div class="column"><p class="level-item">999€</p></div>
-            <div class="column is-1">
-              <div class="field">
-                <div class="control">
-                  <button class="button is-rounded is-small add-cart">
-                    <span class="icon is-small"><i class="fa-solid fa-circle-plus"></i></span>
-                  </button>
-                </div>
-              </div>    
-            </div>
-          </div>
-        </article>
-
-        <article>
-          <div class="columns">
-            <div class="column is-1"><span class="icon"><i class="fa-solid fa-train"></i></span></div>
-            <div class="column"><p class="level-item has-text-weight-bold">Test > Test</p></div>
-            <div class="column"><p class="level-item">00h00</p></div>
-            <div class="column"><p class="level-item">999€</p></div>
-            <div class="column is-1">
-              <div class="field">
-                <div class="control">
-                  <button class="button is-rounded is-small add-cart">
-                    <span class="icon is-small"><i class="fa-solid fa-circle-plus"></i></span>
-                  </button>
-                </div>
-              </div>    
-            </div>
-          </div>
-        </article>
-
-        <article>
-          <div class="columns">
-            <div class="column is-1"><span class="icon"><i class="fa-solid fa-train"></i></span></div>
-            <div class="column"><p class="level-item has-text-weight-bold">Test > Test</p></div>
-            <div class="column"><p class="level-item">00h00</p></div>
-            <div class="column"><p class="level-item">999€</p></div>
-            <div class="column is-1">
-              <div class="field">
-                <div class="control">
-                  <button class="button is-rounded is-small add-cart">
-                    <span class="icon is-small"><i class="fa-solid fa-circle-plus"></i></span>
-                  </button>
-                </div>
-              </div>    
-            </div>
-          </div>
-        </article>
+      <div id="img-holder">
+        <img src="./images/adventure_map.svg" alt="Une représentation d'une femme partant à l'aventure">
+        <p class="subtitle">Et si vous partiez à l'aventure ?</p>
+      </div>
+      
+      <section id="liste-result" class="is-hidden">
+        <h1 class="title">Résultat de la recherche</h2>
       </section>
     </div>
+
+    <!-- Modal pour l'affichage du panier -->
+    <div id="modal-panier" class="modal">
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">
+            <span class="icon-text">
+              <span class="icon">
+                <i class="fa-solid fa-cart-shopping"></i>
+              </span>
+              <span>Panier</span>
+            </span>
+          </p>
+          <p class="mr-4 has-text-weight-bold">Total : <span id="panier-total"></span>€</p>
+          <button class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+          <!-- Content ... -->
+          <p>PANIER</p>
+        </section>
+        <footer class="modal-card-foot">
+          <button class="button is-success">Commander</button>
+        </footer>
+      </div>
+    </div>
+
+    <!-- Modal pour l'affichage des commandes -->
+    <div id="modal-commande" class="modal">
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">
+            <span class="icon-text">
+              <span class="icon">
+                <i class="fa-solid fa-suitcase"></i>
+              </span>
+              <span>Commandes</span>
+            </span>
+          </p>
+          <button class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+          <!-- Content ... -->
+          <p>COMMANDE</p>
+        </section>
+      </div>
+    </div>
   </main>
+
+  <script src="script.js"></script>
 </body>
 
 </html>

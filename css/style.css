@@ -73,5 +73,31 @@ nav .navbar-end button:focus, #search-btn:focus {
 #liste-result {
   overflow-x: hidden;
   overflow-y: auto;
+  height: 80%;
+}
+
+#liste-result article:not(:last-child) {
+  margin-bottom: 1rem;
+  padding-bottom: 0.55rem;
+  border-bottom: 1px solid lightgrey;
+}
+
+#img-holder {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
   height: 100%;
+}
+
+#img-holder img {
+  height: 75%;
+}
+
+#img-holder p {
+  color: var(--primary-color);
+  font-weight: bold;
+}
+
+.modal-card-foot {
+  justify-content: flex-end;
 }
