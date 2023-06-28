@@ -1,4 +1,4 @@
-const urlFetch = "http://localhost:3000/";
+const urlFetch = "https://lacapsule-hack-backend.vercel.app/";
 
 function generateArticle(trip, action = undefined) {
   let articleTrip = `<article><input type='hidden' value='${trip._id}'><div class="columns">
