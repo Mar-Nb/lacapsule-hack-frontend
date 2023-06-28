@@ -64,6 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
   //   $trigger.addEventListener('click', () => { openModal($target); });
   // });
 
+  // Gestion du modal du panier
   const modalPanier = panierBtn.dataset.target;
   const $targetPanier = document.getElementById(modalPanier);
   panierBtn.addEventListener("click", () => {
@@ -91,7 +92,38 @@ document.addEventListener("DOMContentLoaded", () => {
           });
         });
 
+        document.querySelector("#comm-panier").addEventListener("click", function() {
+          const ids = [];
+          document.querySelectorAll(`#${$targetPanier.id} input`).forEach(input => ids.push(input.value));
+
+          fetch(urlFetch + "commande/", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ids})
+          })
+          .then(response => response.json())
+          .then(() => {})
+        });
+
         openModal($targetPanier);
+      })
+  });
+
+  // Gestion du modal des commandes
+  const modalCommande = commandeBtn.dataset.target;
+  const $targetCommande = document.getElementById(modalCommande);
+  commandeBtn.addEventListener("click", () => {
+    fetch(urlFetch + "commande/")
+      .then(response => response.json())
+      .then(commande => {
+        // Remplissage du panier
+        $targetCommande.querySelector("section.modal-card-body").innerHTML = "";
+
+        for (const trip of commande.trips) {
+          $targetCommande.querySelector("section.modal-card-body").innerHTML += generateArticle(trip);
+        }
+
+        openModal($targetCommande);
       })
   });
 
