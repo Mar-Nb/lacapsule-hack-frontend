@@ -78,6 +78,8 @@ document.addEventListener("DOMContentLoaded", () => {
           $targetPanier.querySelector("section.modal-card-body").innerHTML += generateArticle(trip, "del");
         }
 
+        document.querySelector("#panier-total").textContent = panier.total;
+
         // Action de suppression au clic
         document.querySelectorAll(".del-cart").forEach(btn => {
           btn.addEventListener("click", function() {
