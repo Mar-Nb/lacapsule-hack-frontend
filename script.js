@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // *******************************************************************************************************
 
-const urlFetch = "./trips.json";
+const urlFetch = "http://localhost:3000/trips";
 const imgHolder = document.querySelector("#img-holder");
 const listeResult = document.querySelector("#liste-result");
 const resultZone = document.querySelector("#result-zone");
@@ -69,7 +69,7 @@ function generateArticle(trip) {
   const articleTrip = `<article><div class="columns">
     <div class="column is-1"><span class="icon"><i class="fa-solid fa-train"></i></span></div>
     <div class="column"><p class="has-text-weight-bold">${trip.departure} > ${trip.arrival}</p></div>
-    <div class="column"><p>${new Date(trip.date.$date).getHours()}h${new Date(trip.date.$date).getMinutes()}</p></div>
+    <div class="column"><p>${new Date(trip.date).getUTCHours()}h${new Date(trip.date).getUTCMinutes()}</p></div>
     <div class="column"><p>${trip.price}€</p></div>
     <div class="column is-1">
       <div class="field">
@@ -88,18 +88,22 @@ function generateArticle(trip) {
 // Action de recherche de voyage
 document.querySelector("#search-btn").addEventListener("click", function() {
   const searchData = {
-    dep: document.querySelector("#field-depart").value,
-    arr: document.querySelector("#field-arrive").value,
-    date: document.querySelector("#field-date").value
+    departure: document.querySelector("#field-depart").value.length !== 0 ? document.querySelector("#field-depart").value : null,
+    arrival: document.querySelector("#field-arrive").value.length !== 0 ? document.querySelector("#field-arrive").value : null,
+    date: document.querySelector("#field-date").value.length !== 0 ? document.querySelector("#field-date").value : null
   };
   
-  // console.log(date);
+  console.log(searchData);
 
-  fetch(urlFetch)
+  fetch(urlFetch + "/sortByDate", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(searchData)
+  })
     .then(response => response.json())
-    .then(trips => {
-      const dummy = { result: true, trips };
-      if (! dummy.result) {
+    .then(allTrips => {
+      document.querySelector("#nb-trips").textContent = allTrips.trips.length;
+      if (! allTrips.result) {
         imgHolder.querySelector("img").src = "./images/into_the_night_empty.svg";
         imgHolder.querySelector("p").textContent = "Désolé, pas de destination pour votre demande...";
       } else {
@@ -108,14 +112,9 @@ document.querySelector("#search-btn").addEventListener("click", function() {
         resultZone.querySelector("h2").classList.remove("is-hidden");
         listeResult.innerHTML = "";
 
-        for (let trip of dummy.trips) {
-          // console.log(trip.date.$date);
-          const formatDate = (new Date(trip.date.$date)).toISOString().split('T')[0];
-          if (formatDate === searchData.date && trip.departure === searchData.dep && trip.arrival === searchData.arr) {
-            generateArticle(trip);
-          }
+        for (let trip of allTrips.trips) {
+          generateArticle(trip);
         }
       }
     });
-
 });
