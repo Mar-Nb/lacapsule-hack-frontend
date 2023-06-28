@@ -14,6 +14,8 @@
 
 .is-rounded-box { border-radius: 20px; }
 
+input[type='hidden'] { padding: 0; margin: 0; }
+
 html {
   /* background-color: var(--main-color); */
   background-image: url("../images/bg.svg");
@@ -58,9 +60,22 @@ nav .navbar-end button:focus, #search-btn:focus {
   color: white;
 }
 
+.del-cart {
+  background-color: lightcoral;
+  border-color: red;
+  color: white;
+}
+
 .add-cart:hover {
   background-color: var(--secondary-hover);
   border-color: var(--secondary-color);
+  color: white;
+  transition: 0.2s;
+}
+
+.del-cart:hover {
+  background-color: red;
+  border-color: red;
   color: white;
   transition: 0.2s;
 }

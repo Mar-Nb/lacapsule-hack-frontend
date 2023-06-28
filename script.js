@@ -1,3 +1,26 @@
+const urlFetch = "http://localhost:3000/";
+
+function generateArticle(trip, action = undefined) {
+  let articleTrip = `<article><input type='hidden' value='${trip._id}'><div class="columns">
+    <div class="column is-1"><span class="icon"><i class="fa-solid fa-train"></i></span></div>
+    <div class="column"><p class="has-text-weight-bold">${trip.departure} > ${trip.arrival}</p></div>
+    <div class="column"><p>${new Date(trip.date).getUTCHours()}h${new Date(trip.date).getUTCMinutes()}</p></div>
+    <div class="column"><p>${trip.price}€</p></div>`;
+  
+  if (action !== undefined) {
+    const colBtn = "<div class='column is-1'><div class='field'><div class='control'>";
+    if (action === "add") {
+      articleTrip += colBtn + "<button class='button is-rounded is-small add-cart'><span class='icon is-small'><i class='fa-solid fa-circle-plus'></i></span></button></div></div></div>";
+    } else if (action === "del") {
+      articleTrip += colBtn + "<button class='button is-rounded is-small del-cart'><span class='icon is-small'><i class='fa-solid fa-trash'></i></span></button></div></div></div>";
+    }
+  }
+
+  articleTrip += "</div></article>";
+
+  return articleTrip;
+}
+
 // Pour pouvoir afficher les boutons de la navbar en mode mobile (cf. doc de Bulma)
 document.addEventListener("DOMContentLoaded", () => {
   // Get all "navbar-burger" elements
@@ -34,11 +57,42 @@ document.addEventListener("DOMContentLoaded", () => {
   // Add a click event on buttons to open a specific modal
   const panierBtn = document.querySelector("#panier-btn");
   const commandeBtn = document.querySelector("#commande-btn");
-  ([panierBtn, commandeBtn] || []).forEach(($trigger) => {
-    const modal = $trigger.dataset.target;
-    const $target = document.getElementById(modal);
+  // ([panierBtn, commandeBtn] || []).forEach(($trigger) => {
+  //   const modal = $trigger.dataset.target;
+  //   const $target = document.getElementById(modal);
 
-    $trigger.addEventListener('click', () => { openModal($target); });
+  //   $trigger.addEventListener('click', () => { openModal($target); });
+  // });
+
+  const modalPanier = panierBtn.dataset.target;
+  const $targetPanier = document.getElementById(modalPanier);
+  panierBtn.addEventListener("click", () => {
+    fetch(urlFetch + "panier/")
+      .then(response => response.json())
+      .then(panier => {
+        // Remplissage du panier
+        $targetPanier.querySelector("section.modal-card-body").innerHTML = "";
+
+        for (const trip of panier.trips) {
+          $targetPanier.querySelector("section.modal-card-body").innerHTML += generateArticle(trip, "del");
+        }
+
+        // Action de suppression au clic
+        document.querySelectorAll(".del-cart").forEach(btn => {
+          btn.addEventListener("click", function() {
+            const id = btn.closest("article").firstChild.value;
+            fetch(urlFetch + "panier/" + id, {
+              method: "DELETE"
+            })
+            .then(response => response.json())
+            .then(deleted => {
+              if (deleted.result) { btn.closest("article").remove(); }
+            })
+          });
+        });
+
+        openModal($targetPanier);
+      })
   });
 
   // Add a click event on various child elements to close the parent modal
@@ -60,30 +114,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // *******************************************************************************************************
 
-const urlFetch = "http://localhost:3000/trips";
 const imgHolder = document.querySelector("#img-holder");
 const listeResult = document.querySelector("#liste-result");
 const resultZone = document.querySelector("#result-zone");
-
-function generateArticle(trip) {
-  const articleTrip = `<article><div class="columns">
-    <div class="column is-1"><span class="icon"><i class="fa-solid fa-train"></i></span></div>
-    <div class="column"><p class="has-text-weight-bold">${trip.departure} > ${trip.arrival}</p></div>
-    <div class="column"><p>${new Date(trip.date).getUTCHours()}h${new Date(trip.date).getUTCMinutes()}</p></div>
-    <div class="column"><p>${trip.price}€</p></div>
-    <div class="column is-1">
-      <div class="field">
-        <div class="control">
-          <button class="button is-rounded is-small add-cart">
-            <span class="icon is-small"><i class="fa-solid fa-circle-plus"></i></span>
-          </button>
-        </div>
-      </div>    
-    </div>
-  </div></article>`;
-
-  listeResult.innerHTML += articleTrip;
-}
 
 // Action de recherche de voyage
 document.querySelector("#search-btn").addEventListener("click", function() {
@@ -95,7 +128,7 @@ document.querySelector("#search-btn").addEventListener("click", function() {
   
   console.log(searchData);
 
-  fetch(urlFetch + "/sortByDate", {
+  fetch(urlFetch + "trips/sortByDate", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(searchData)
@@ -113,8 +146,22 @@ document.querySelector("#search-btn").addEventListener("click", function() {
         listeResult.innerHTML = "";
 
         for (let trip of allTrips.trips) {
-          generateArticle(trip);
+          listeResult.innerHTML += generateArticle(trip, "add");
         }
       }
+
+      document.querySelectorAll(".add-cart").forEach(btn => {
+        btn.addEventListener("click", function() {
+          const idTrip = this.closest("article").querySelector("input").value;
+
+          fetch(urlFetch + "panier/", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id: idTrip })
+          })
+          .then(response => response.json())
+          .then(() => {})
+        });
+      });
     });
 });
