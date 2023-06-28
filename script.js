@@ -57,12 +57,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // Add a click event on buttons to open a specific modal
   const panierBtn = document.querySelector("#panier-btn");
   const commandeBtn = document.querySelector("#commande-btn");
-  // ([panierBtn, commandeBtn] || []).forEach(($trigger) => {
-  //   const modal = $trigger.dataset.target;
-  //   const $target = document.getElementById(modal);
-
-  //   $trigger.addEventListener('click', () => { openModal($target); });
-  // });
 
   // Gestion du modal du panier
   const modalPanier = panierBtn.dataset.target;
@@ -89,7 +83,10 @@ document.addEventListener("DOMContentLoaded", () => {
             })
             .then(response => response.json())
             .then(deleted => {
-              if (deleted.result) { btn.closest("article").remove(); }
+              if (deleted.result) {
+                btn.closest("article").remove();
+                document.querySelector("#panier-total").textContent = deleted.total;
+              }
             })
           });
         });
